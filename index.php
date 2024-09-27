@@ -33,7 +33,8 @@ $result = $conn->query($sql);
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <div class"mb-3">
-                    <select class="form-select" aria-label="Default select example">
+                    <label for="rol" class="form-label">Rol</label>
+                    <select id="rol" name="rol" class="form-select" aria-label="Default select example">
                         <?php
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
@@ -45,7 +46,7 @@ $result = $conn->query($sql);
 
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Registrarse</button>
+                <button type="submit" class="btn mt-5 btn-primary">Registrarse</button>
             </form>
         </div>
     </div>
