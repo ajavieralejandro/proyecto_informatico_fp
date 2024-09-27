@@ -52,7 +52,8 @@
             if (password_verify($password, $user['contraseña'])) {
                 //Estoy asignando un usuario a la sesion
                 $_SESSION['username'] = $username;
-                header("Location: index.php");
+                $_SESSION['id'] = $user['id'];
+                header("Location: dashboard.php");
             } else {
                 echo "<div class='alert alert-danger mt-3'>Contraseña incorrecta</div>";
             }
