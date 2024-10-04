@@ -1,7 +1,7 @@
 <?php
 include 'conexion.php';
 
-$sql = "SELECT * FROM roles";
+$sql = "SELECT * FROM categorias";
 $result = $conn->query($sql);
 ?>
 
@@ -29,8 +29,23 @@ $result = $conn->query($sql);
                     <input type="text" class="form-control" id="image" name="image" required>
                 </div>
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                    <label for="floatingTextarea">Comments</label>
+                    <input name="descripcion" class="form-control form-control-lg" type="text" placeholder=".form-control-lg" aria-label=".form-control-lg example">
+                    <label for="floatingTextarea">Descripcion</label>
+                </div>
+
+                <div class"mb-3">
+                    <label for="categoria" class="form-label">Categoria</label>
+                    <select id="categoria" name="categoria" class="form-select" aria-label="Default select example">
+                        <?php
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<option value={$row['id']}>{$row['nombre']}</option>
+";
+                            }
+                        }
+                        ?>
+
+                    </select>
                 </div>
 
                 <button type="submit" class="btn mt-5 btn-primary">Registrar Noticia</button>

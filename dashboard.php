@@ -18,6 +18,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -32,24 +33,9 @@ $result = $conn->query($sql);
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="dashboard.php">Dashboard</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
+
 
                 </ul>
                 <a href="logout.php" class="btn btn-danger">Cerrar Sesión</a>
@@ -62,6 +48,37 @@ $result = $conn->query($sql);
         <?php
         if ($result->num_rows == 0) {
             echo '<h6>No hay noticias para mostrar</h6>';
+        } else {
+            echo '
+                <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        ';
+            while ($noticia = $result->fetch_assoc()) {
+                echo "
+                <tr>
+                        <th >{$noticia['id']}</th>
+                        <td>{$noticia['titulo']}</td>
+                        <td>{$noticia['categoria_id']}</td>
+                        <td>
+                            <a href=\"eliminar_noticia.php?id={$noticia['id']}\">
+                            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>
+                            </a>
+
+
+                        </td>
+                </tr>
+                ";
+            }
+
+            echo '</tbody></table>';
         }
         ?>
         <a href="agregar_noticia.php" class="btn btn-primary" role="button" aria-disabled="true">Agregar Noticia</a>
