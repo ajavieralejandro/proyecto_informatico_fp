@@ -53,6 +53,8 @@
                 //Estoy asignando un usuario a la sesion
                 $_SESSION['username'] = $username;
                 $_SESSION['id'] = $user['id'];
+                $_SESSION['rol_id'] = $user['rol_id'];
+
                 header("Location: dashboard.php");
             } else {
                 echo "<div class='alert alert-danger mt-3'>Contraseña incorrecta</div>";
