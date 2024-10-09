@@ -57,12 +57,12 @@ $result = $conn->query($sql);
             <div class="row">
                 <div class=" col-sm-12 col-md-4">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <a href="dashboard_admin.php" class="list-group-item list-group-item-action ">
                             Principal
                         </a>
-                        <a href="noticias_admin.php" class="list-group-item list-group-item-action">Noticias</a>
+                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">Noticias</a>
                         <a href="#" class="list-group-item list-group-item-action">Usuarios</a>
-                        <a href="roles_admin.php" class="list-group-item list-group-item-action">Roles</a>
+                        <a href="#" class="list-group-item list-group-item-action">Roles</a>
                         <a class="list-group-item list-group-item-action disabled" aria-disabled="true">Categorias</a>
                     </div>
                 </div>
@@ -71,6 +71,46 @@ $result = $conn->query($sql);
 
             </div>
         </div>
+        <?php
+        if ($result->num_rows == 0) {
+            echo '<h6>No hay noticias para mostrar</h6>';
+        } else {
+            echo '
+                <table class="table mt-5">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Titulo</th>
+                            <th scope="col">ID Usuario</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        ';
+            while ($noticia = $result->fetch_assoc()) {
+                echo "
+                <tr>
+                        <th >{$noticia['id']}</th>
+                        <td>{$noticia['titulo']}</td>
+                        <td>{$noticia['autor_id']}</td>
+                        <td>{$noticia['categoria_id']}</td>
+                        <td>
+                            <a href=\"eliminar_noticia.php?id={$noticia['id']}\">
+                            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>
+                            </a>
+
+
+                        </td>
+                </tr>
+                ";
+            }
+
+            echo '</tbody></table>';
+        }
+        ?>
+        <a href="agregar_noticia.php" class="btn btn-primary" role="button" aria-disabled="true">Agregar Noticia</a>
+
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

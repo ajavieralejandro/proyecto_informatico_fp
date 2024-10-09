@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
     }
 }
 $id = $_SESSION['id'];
-$sql = "SELECT * FROM noticias ";
+$sql = "SELECT * FROM roles WHERE NOT nombre='admin' ";
 $result = $conn->query($sql);
 
 ?>
@@ -57,12 +57,12 @@ $result = $conn->query($sql);
             <div class="row">
                 <div class=" col-sm-12 col-md-4">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <a href="dashboard_admin.php" class="list-group-item list-group-item-action ">
                             Principal
                         </a>
-                        <a href="noticias_admin.php" class="list-group-item list-group-item-action">Noticias</a>
+                        <a href="#" class="list-group-item list-group-item-action ">Noticias</a>
                         <a href="#" class="list-group-item list-group-item-action">Usuarios</a>
-                        <a href="roles_admin.php" class="list-group-item list-group-item-action">Roles</a>
+                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">Roles</a>
                         <a class="list-group-item list-group-item-action disabled" aria-disabled="true">Categorias</a>
                     </div>
                 </div>
@@ -71,6 +71,44 @@ $result = $conn->query($sql);
 
             </div>
         </div>
+        <?php
+        if ($result->num_rows == 0) {
+            echo '<h6>No hay roles para mostrar</h6>';
+        } else {
+            echo '
+                <table class="table mt-5">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">nombre</th>
+                            <th scope="col">acciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        ';
+            while ($rol = $result->fetch_assoc()) {
+                echo "
+                <tr>
+                        <th >{$rol['id']}</th>
+                        <td>{$rol['nombre']}</td>
+                       
+                        <td>
+                            <a href=\"eliminar_rol.php?id={$rol['id']}\">
+                            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>
+                            </a>
+
+
+                        </td>
+                </tr>
+                ";
+            }
+
+            echo '</tbody></table>';
+        }
+        ?>
+        <a href="agregar_rol.php" class="btn btn-primary" role="button" aria-disabled="true">Agregar Rol</a>
+
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
